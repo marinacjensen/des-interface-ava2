@@ -1,65 +1,236 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editor de Página HTML</title>
-  <link href="style.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/js-beautify@1.14.0/js/lib/beautify-html.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editor de Página</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-6 p-3 bg-light overflow-auto" style="height: 100vh;">
-        <h2>Editor</h2>
-        <div class="mb-3">
-          <h4>Cabeçalho</h4>
-          <input type="text" class="form-control mb-2" id="headerText" placeholder="Texto do cabeçalho">
-          <input type="color" class="form-control form-control-color mb-2" id="headerBgColor" value="#ffffff">
-          <button class="btn btn-primary w-100" onclick="addHeader()">Adicionar Cabeçalho</button>
+
+      <div class="col-md-6 bg-white p-4 border-end" style="height: 100vh; overflow-y: auto;">
+        <h1 class="mb-4">Editor de Página</h1>
+
+ 
+        <h2>Editar Cabeçalho</h2>
+        <div id="areaCabecalho">
+          <label>Texto: <input type="text" id="inputTituloHeader" placeholder="Digite um título" /></label>
+          <label>Imagem: <input type="text" id="inputImgHeader" placeholder="https://..." /></label>
+          <label>Cor fundo: <input type="color" id="corFundoHeader" /></label>
+          <label>Cor texto: <input type="color" id="corTextoHeader" /></label>
+          <label>Tamanho fonte: <input type="number" id="tamanhoTextoHeader" min="10" max="72" /></label>
+          <label>Espaçamento: <input type="number" id="espacamentoHeader" min="0" max="100" /></label>
+          <label>Alinhamento:
+            <select id="alinhamentoHeader">
+              <option value="left">Esquerda</option>
+              <option value="center">Centro</option>
+              <option value="right">Direita</option>
+            </select>
+          </label>
+          <label>Borda: <input type="text" id="bordaHeader" /></label>
+          <button onclick="criarCabecalho()">Gerar Cabeçalho</button>
         </div>
-        <div class="mb-3">
-          <h4>Menu</h4>
-          <input type="text" class="form-control mb-2" id="menuItem" placeholder="Item do menu">
-          <button class="btn btn-primary w-100" onclick="addMenuItem()">Adicionar Item</button>
+
+      
+        <h4>Editar Menu</h4>
+        <div id="areaMenu" class="mb-4">
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="inputItensMenu" placeholder="Início, Sobre, Contato">
+            <label for="inputItensMenu">Itens (vírgula)</label>
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="inputImgMenu" placeholder="Imagem URL">
+            <label for="inputImgMenu">Imagem</label>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Posição imagem</label>
+            <select class="form-select" id="posicaoImgMenu">
+              <option value="top">Acima</option>
+              <option value="left">Esquerda</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cor de Fundo</label>
+            <input type="color" class="form-control form-control-color" id="corFundoMenu">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cor do Texto</label>
+            <input type="color" class="form-control form-control-color" id="corTextoMenu">
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="bordaItensMenu" placeholder="1px solid black">
+            <label for="bordaItensMenu">Borda</label>
+          </div>
+          <div class="row g-2">
+            <div class="col">
+              <label class="form-label">Tamanho Fonte</label>
+              <input type="number" class="form-control" id="tamanhoFonteMenu">
+            </div>
+            <div class="col">
+              <label class="form-label">Espaçamento</label>
+              <input type="number" class="form-control" id="espacamentoItensMenu">
+            </div>
+          </div>
+          <button class="btn btn-primary mt-3 w-100" onclick="criarMenu()">Gerar Menu</button>
         </div>
-        <div class="mb-3">
-          <h4>Galeria</h4>
-          <input type="text" class="form-control mb-2" id="galleryText" placeholder="Descrição do card">
-          <input type="file" class="form-control mb-2" id="galleryImage">
-          <button class="btn btn-primary w-100" onclick="addGalleryCard()">Adicionar Card</button>
+
+        <h4>Editar Galeria</h4>
+        <div id="areaGaleria" class="mb-4">
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="inputImgCard" placeholder="URL da imagem">
+            <label for="inputImgCard">Imagem</label>
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="inputTituloCard" placeholder="Título">
+            <label for="inputTituloCard">Título</label>
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="inputDescCard" placeholder="Descrição">
+            <label for="inputDescCard">Descrição</label>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cor fundo</label>
+            <input type="color" class="form-control form-control-color" id="corFundoCard">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cor texto</label>
+            <input type="color" class="form-control form-control-color" id="corTextoCard">
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="bordaCard" placeholder="Borda">
+            <label for="bordaCard">Borda</label>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col">
+              <label class="form-label">Largura</label>
+              <input type="number" class="form-control" id="larguraCard">
+            </div>
+            <div class="col">
+              <label class="form-label">Altura</label>
+              <input type="number" class="form-control" id="alturaCard">
+            </div>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Espaçamento entre cards</label>
+            <input type="number" class="form-control" id="gapCards">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Distribuição</label>
+            <select class="form-select" id="direcaoGaleria">
+              <option value="row">Linha</option>
+              <option value="column">Coluna</option>
+            </select>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary w-100" onclick="adicionarCardGaleria()">Adicionar Card</button>
+            <button class="btn btn-outline-danger w-100" onclick="resetarGaleria()">Limpar Galeria</button>
+          </div>
         </div>
-        <div class="mb-3">
-          <h4>Formulário</h4>
-          <input type="text" class="form-control mb-2" id="formLabel" placeholder="Label do campo">
-          <select class="form-select mb-2" id="formType">
-            <option value="text">Texto</option>
-            <option value="email">Email</option>
-            <option value="date">Data</option>
+
+     
+        <h4>Editar Formulário</h4>
+        <div id="areaFormulario" class="mb-4">
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="tituloFormulario" placeholder="Título do formulário">
+            <label for="tituloFormulario">Título</label>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Tipo do campo</label>
+            <select class="form-select" id="tipoCampoForm">
+              <option value="text">Texto</option>
+              <option value="email">Email</option>
+              <option value="radio">Radio</option>
+              <option value="select">Select</option>
+              <option value="date">Data</option>
+            </select>
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="labelCampoForm" placeholder="Label">
+            <label for="labelCampoForm">Label</label>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cor de fundo</label>
+            <input type="color" class="form-control form-control-color" id="corFundoForm">
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="bordaForm" placeholder="Borda formulário">
+            <label for="bordaForm">Borda formulário</label>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cor do texto</label>
+            <input type="color" class="form-control form-control-color" id="corTextoForm">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cor fundo campos</label>
+            <input type="color" class="form-control form-control-color" id="corCamposForm">
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="bordaCamposForm" placeholder="Borda campos">
+            <label for="bordaCamposForm">Borda campos</label>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary w-100" onclick="addCampoForm()">Adicionar Campo</button>
+            <button class="btn btn-outline-success w-100" onclick="gerarForm()">Gerar Formulário</button>
+            <button class="btn btn-outline-danger w-100" onclick="limparForm()">Limpar Formulário</button>
+          </div>
+        </div>
+
+  
+        <h4>Editar Rodapé</h4>
+        <div id="areaRodape" class="mb-5">
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="inputTextoFooter" placeholder="Texto do rodapé">
+            <label for="inputTextoFooter">Texto</label>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col">
+              <label class="form-label">Tamanho Fonte</label>
+              <input type="number" class="form-control" id="tamanhoFonteFooter">
+            </div>
+            <div class="col">
+              <label class="form-label">Cor do Texto</label>
+              <input type="color" class="form-control form-control-color" id="corTextoFooter">
+            </div>
+            <div class="col">
+              <label class="form-label">Cor de Fundo</label>
+              <input type="color" class="form-control form-control-color" id="corFundoFooter">
+            </div>
+          </div>
+          <label class="form-label">Alinhamento</label>
+          <select class="form-select" id="alinhamentoFooter">
+            <option value="left">Esquerda</option>
+            <option value="center">Centro</option>
+            <option value="right">Direita</option>
           </select>
-          <button class="btn btn-primary w-100" onclick="addFormField()">Adicionar Campo</button>
+          <button class="btn btn-primary mt-3 w-100" onclick="criarRodape()">Gerar Rodapé</button>
         </div>
-        <div class="mb-3">
-          <h4>Rodapé</h4>
-          <input type="text" class="form-control mb-2" id="footerText" placeholder="Texto do rodapé">
-          <button class="btn btn-primary w-100" onclick="addFooter()">Adicionar Rodapé</button>
-        </div>
-        <div class="mt-4">
-          <button class="btn btn-success w-100 mb-2" onclick="generateHTML()">Gerar HTML</button>
-          <button class="btn btn-secondary w-100 mb-2" onclick="saveHTML()">Salvar no LocalStorage</button>
-          <button class="btn btn-info w-100 mb-2" onclick="loadHTML()">Carregar do LocalStorage</button>
-          <button class="btn btn-danger w-100" onclick="clearStorage()">Limpar LocalStorage</button>
+
+      </div>
+
+      <div class="col-md-6 p-4 bg-light" style="height: 100vh; overflow-y: auto;">
+        <h4 class="mb-3">Pré-visualização da Página</h4>
+        <div id="preview" class="border bg-white p-3 mb-4" style="min-height: 300px;"></div>
+
+        <h5>Código Gerado</h5>
+        <pre id="codigoHTML" class="bg-dark text-white p-3 rounded" style="overflow-x: auto;"></pre>
+
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-success w-100" onclick="mostrarHtmlGerado()">Mostrar Código</button>
+          <button class="btn btn-warning w-100" onclick="salvarHtml()">Salvar</button>
+          <button class="btn btn-info w-100" onclick="carregarHtml()">Carregar</button>
+          <button class="btn btn-danger w-100" onclick="limparHtml()">Limpar</button>
         </div>
       </div>
-      <div class="col-md-6 p-3 overflow-auto" style="height: 100vh;">
-        <h2>Visualização</h2>
-        <div id="generatedPage" class="border p-3 bg-white"></div>
-        <h3 class="mt-4">Código HTML</h3>
-        <pre id="htmlCode" class="bg-light p-3 border"></pre>
-      </div>
+
     </div>
   </div>
+
   <script src="script.js"></script>
 </body>
+
 </html>
