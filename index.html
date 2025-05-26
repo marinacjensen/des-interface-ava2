@@ -23,24 +23,47 @@
         <h1 class="mb-4">Editor de Página</h1>
 
         <!-- Seção do Cabeçalho -->
-        <h2>Editar Cabeçalho</h2>
-        <div id="areaCabecalho">
-          <!-- Inputs pro texto, imagem, cores, alinhamento, etc -->
-          <label>Texto: <input type="text" id="inputTituloHeader" placeholder="Digite um título" /></label>
-          <label>Imagem: <input type="text" id="inputImgHeader" placeholder="https://..." /></label>
-          <label>Cor fundo: <input type="color" id="corFundoHeader" /></label>
-          <label>Cor texto: <input type="color" id="corTextoHeader" /></label>
-          <label>Tamanho fonte: <input type="number" id="tamanhoTextoHeader" min="10" max="72" /></label>
-          <label>Espaçamento: <input type="number" id="espacamentoHeader" min="0" max="100" /></label>
-          <label>Alinhamento:
-            <select id="alinhamentoHeader">
+                <h2>Editar Cabeçalho</h2>
+        <div id="areaCabecalho" class="mb-4">
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="inputTituloHeader" placeholder="Digite um título">
+            <label for="inputTituloHeader">Texto</label>
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="inputImgHeader" placeholder="https://...">
+            <label for="inputImgHeader">Imagem (URL)</label>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cor de fundo</label>
+            <input type="color" class="form-control form-control-color" id="corFundoHeader">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Cor do texto</label>
+            <input type="color" class="form-control form-control-color" id="corTextoHeader">
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col">
+              <label class="form-label">Tamanho da fonte</label>
+              <input type="number" class="form-control" id="tamanhoTextoHeader" min="10" max="72">
+            </div>
+            <div class="col">
+              <label class="form-label">Espaçamento</label>
+              <input type="number" class="form-control" id="espacamentoHeader" min="0" max="100">
+            </div>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Alinhamento</label>
+            <select class="form-select" id="alinhamentoHeader">
               <option value="left">Esquerda</option>
               <option value="center">Centro</option>
               <option value="right">Direita</option>
             </select>
-          </label>
-          <label>Borda: <input type="text" id="bordaHeader" /></label>
-          <button onclick="criarCabecalho()">Gerar Cabeçalho</button>
+          </div>
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="bordaHeader" placeholder="Borda (ex: 1px solid black)">
+            <label for="bordaHeader">Borda</label>
+          </div>
+          <button class="btn btn-outline-primary w-100" onclick="criarCabecalho()">Gerar Cabeçalho</button>
         </div>
 
         <!-- Menu de navegação -->
