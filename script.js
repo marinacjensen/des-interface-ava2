@@ -1,6 +1,7 @@
+// Aqui é onde a página vai aparecer montada
 const areaPreview = document.getElementById('preview');
 
-
+// Essa função monta o cabeçalho com base nos inputs
 function criarCabecalho() {
   const titulo = document.getElementById('inputTituloHeader').value;
   const img = document.getElementById('inputImgHeader').value;
@@ -11,9 +12,11 @@ function criarCabecalho() {
   const alinhamento = document.getElementById('alinhamentoHeader').value;
   const borda = document.getElementById('bordaHeader').value;
 
+  // Se já tiver um header, remove antes de criar outro
   const headerAntigo = areaPreview.querySelector('header');
   if (headerAntigo) headerAntigo.remove();
 
+  // Cria um novo header e aplica os estilos escolhidos
   const novoHeader = document.createElement('header');
   novoHeader.style.cssText = `
     background-color: ${corFundo};
@@ -25,6 +28,7 @@ function criarCabecalho() {
     padding: 10px;
   `;
 
+  // Adiciona a imagem se o usuário colocou uma URL
   if (img) {
     const imagem = document.createElement('img');
     imagem.src = img;
@@ -33,6 +37,7 @@ function criarCabecalho() {
     novoHeader.appendChild(imagem);
   }
 
+  // Adiciona o título, se tiver
   if (titulo) {
     const tituloH1 = document.createElement('h1');
     tituloH1.innerText = titulo;
@@ -40,10 +45,11 @@ function criarCabecalho() {
     novoHeader.appendChild(tituloH1);
   }
 
+  // Joga o header lá no topo da prévia
   areaPreview.prepend(novoHeader);
 }
 
-
+// Cria o menu com os itens e imagem, se quiser
 function criarMenu() {
   const menuAntigo = areaPreview.querySelector('nav');
   if (menuAntigo) menuAntigo.remove();
@@ -67,6 +73,7 @@ function criarMenu() {
     margin: 10px 0;
   `;
 
+  // Se o usuário colocou uma imagem, ela vai pro menu
   if (imgMenu) {
     const imagem = document.createElement('img');
     imagem.src = imgMenu;
@@ -78,6 +85,7 @@ function criarMenu() {
   const ul = document.createElement('ul');
   ul.style.cssText = `display: flex; flex-direction: row; list-style: none; gap: ${espacamento}px; margin: 0; padding: 0;`;
 
+  // Aqui vai cada item do menu
   listaItens.forEach(txt => {
     const li = document.createElement('li');
     li.textContent = txt;
@@ -89,7 +97,7 @@ function criarMenu() {
   areaPreview.appendChild(nav);
 }
 
-
+// Adiciona um card na galeria
 function adicionarCardGaleria() {
   const imgUrl = document.getElementById('inputImgCard').value;
   const titulo = document.getElementById('inputTituloCard').value;
@@ -102,6 +110,7 @@ function adicionarCardGaleria() {
   const espacamento = document.getElementById('gapCards').value;
   const direcao = document.getElementById('direcaoGaleria').value;
 
+  // Se ainda não existir galeria, cria uma nova
   let galeria = document.getElementById('galeria');
   if (!galeria) {
     galeria = document.createElement('section');
@@ -113,6 +122,7 @@ function adicionarCardGaleria() {
   galeria.style.flexDirection = direcao;
   galeria.style.gap = `${espacamento}px`;
 
+  // Cria o card com as infos inseridas
   const card = document.createElement('div');
   card.className = 'card';
   card.style.cssText = `
@@ -153,13 +163,16 @@ function adicionarCardGaleria() {
   galeria.appendChild(card);
 }
 
+// Remove tudo da galeria
 function resetarGaleria() {
   const galeria = document.getElementById('galeria');
   if (galeria) galeria.remove();
 }
 
+// Guardamos os campos que o usuário quer no formulário aqui
 const listaCamposForm = [];
 
+// Adiciona um novo campo à lista do formulário
 function addCampoForm() {
   const tipo = document.getElementById('tipoCampoForm').value;
   const label = document.getElementById('labelCampoForm').value;
@@ -168,6 +181,7 @@ function addCampoForm() {
   alert(`Campo "${label}" adicionado!`);
 }
 
+// Monta o formulário com todos os campos salvos
 function gerarForm() {
   const titulo = document.getElementById('tituloFormulario').value;
   const corFundo = document.getElementById('corFundoForm').value;
@@ -189,6 +203,7 @@ function gerarForm() {
     form.appendChild(h3);
   }
 
+  // Adiciona todos os campos criados
   listaCamposForm.forEach(({ tipo, label }, i) => {
     const campoWrapper = document.createElement('div');
     campoWrapper.style.marginBottom = '10px';
@@ -224,12 +239,14 @@ function gerarForm() {
   areaPreview.appendChild(form);
 }
 
+// Remove o form da pré-visualização e limpa a lista de campos
 function limparForm() {
   const form = areaPreview.querySelector('form');
   if (form) form.remove();
   listaCamposForm.length = 0;
 }
 
+// Cria o rodapé com os estilos informados
 function criarRodape() {
   const texto = document.getElementById('inputTextoFooter').value;
   const tamanho = document.getElementById('tamanhoFonteFooter').value;
@@ -247,20 +264,24 @@ function criarRodape() {
   areaPreview.appendChild(rodape);
 }
 
+// Gera a estrutura HTML completa da página (pra exportar)
 function montarHTMLFinal() {
   return `<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Título da Página</title></head><body>${areaPreview.innerHTML}</body></html>`;
 }
 
+// Mostra o HTML gerado na caixinha preta
 function mostrarHtmlGerado() {
   const codigoFinal = montarHTMLFinal();
   document.getElementById('codigoHTML').textContent = codigoFinal;
 }
 
+// Salva o HTML no localStorage do navegador
 function salvarHtml() {
   localStorage.setItem('paginaHTML', montarHTMLFinal());
   alert('Página salva no LocalStorage!');
 }
 
+// Recupera o HTML salvo (caso o usuário queira voltar)
 function carregarHtml() {
   const conteudo = localStorage.getItem('paginaHTML');
   if (!conteudo) return alert('Nada salvo.');
@@ -274,6 +295,7 @@ function carregarHtml() {
   }
 }
 
+// Limpa tudo o que foi salvo no localStorage
 function limparHtml() {
   localStorage.removeItem('paginaHTML');
   document.getElementById('codigoHTML').textContent = '';
